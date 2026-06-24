@@ -1,0 +1,25 @@
+services:
+  - type: worker
+    name: chronostar-keeper
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: KEEPER_SECRET
+        sync: false
+      - key: VAULT_CONTRACT_ID
+        sync: false
+      - key: STREAM_CONTRACT_ID
+        sync: false
+      - key: DCA_CONTRACT_ID
+        sync: false
+      - key: STELLAR_RPC_URL
+        value: https://soroban-testnet.stellar.org
+      - key: STELLAR_NETWORK_PASSPHRASE
+        value: Test SDF Network ; September 2015
+      - key: POLL_INTERVAL_MS
+        value: "30000"
+      - key: LOG_LEVEL
+        value: info
+      - key: PORT
+        value: "3002"

@@ -1,0 +1,23 @@
+name: Test Keeper
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'keeper/**'
+  pull_request:
+    paths:
+      - 'keeper/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+        working-directory: keeper
+      - run: npm test
+        working-directory: keeper

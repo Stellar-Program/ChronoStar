@@ -1,0 +1,16 @@
+{
+  "name": "chronostar-keeper",
+  "version": "1.0.0",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test src/**/*.test.js"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^13.0.0",
+    "pino": "^9.0.0",
+    "pino-pretty": "^13.0.0"
+  }
+}
