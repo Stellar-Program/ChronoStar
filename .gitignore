@@ -7,3 +7,4 @@ target/
 *.wasm
 .DS_Store
 *.log
+.astro/
