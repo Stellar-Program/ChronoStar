@@ -1,0 +1,17 @@
+:root {
+  --sl-color-accent-low: #0a1a3a;
+  --sl-color-accent: #4f8ef7;
+  --sl-color-accent-high: #b3d0ff;
+  --sl-color-white: #f1f5f9;
+  --sl-color-gray-1: #e2e8f0;
+  --sl-color-gray-2: #cbd5e1;
+  --sl-color-gray-3: #64748b;
+  --sl-color-gray-4: #475569;
+  --sl-color-gray-5: #1e2330;
+  --sl-color-gray-6: #111318;
+  --sl-color-black: #0a0b0f;
+}
+
+.site-title {
+  font-family: 'Space Grotesk', sans-serif;
+}

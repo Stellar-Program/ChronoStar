@@ -1,0 +1,14 @@
+{
+  "name": "chronostar-docs",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.28.6",
+    "astro": "^4.16.19"
+  }
+}
