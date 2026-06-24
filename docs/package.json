@@ -5,10 +5,15 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "postinstall": "patch-package"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@astrojs/starlight": "^0.28.6",
     "astro": "^4.16.19"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1"
   }
 }
