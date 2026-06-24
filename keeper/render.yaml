@@ -23,3 +23,7 @@ services:
         value: info
       - key: PORT
         value: "3002"
+      - key: RETRY_MAX_ATTEMPTS
+        value: "5"
+      - key: RETRY_BASE_DELAY_MS
+        value: "1000"
