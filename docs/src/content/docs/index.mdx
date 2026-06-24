@@ -1,0 +1,34 @@
+---
+title: ChronoStar
+description: Time-based payment primitives for the Stellar ecosystem
+template: splash
+hero:
+  tagline: Scheduled & recurring payments on Stellar
+  image:
+    file: ../../assets/logo.svg
+  actions:
+    - text: Quickstart
+      link: /getting-started/quickstart/
+      variant: primary
+    - text: Overview
+      link: /getting-started/overview/
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## What is ChronoStar?
+
+ChronoStar is a suite of smart contracts for time-based payment primitives on the Stellar network.
+
+<CardGrid>
+  <Card title="ScheduleVault" icon="lock">
+    Lock tokens until a future ledger. Perfect for escrow, vesting, and conditional releases.
+  </Card>
+  <Card title="RecurringStream" icon="arrow-repeat">
+    Stream payments continuously over time. Ideal for salaries, subscriptions, and dividends.
+  </Card>
+  <Card title="DCAPolicy" icon="graph-up">
+    Dollar-cost average into any asset on a schedule. Automate your investment strategy.
+  </Card>
+</CardGrid>
