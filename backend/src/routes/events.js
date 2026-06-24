@@ -1,0 +1,45 @@
+import { Router } from 'express';
+
+export function createEventsRouter(clients) {
+  const router = Router();
+
+  router.get('/', async (req, res, next) => {
+    try {
+      const events = [];
+
+      for (const [key, { client, contractId }] of Object.entries(clients)) {
+        const countFn = key === 'vault' ? 'vault_count' : key === 'stream' ? 'stream_count' : 'dca_count';
+        const getFn = key === 'vault' ? 'get_vault' : key === 'stream' ? 'get_stream' : 'get_dca';
+        const statusField = key === 'vault' ? 'status' : 'status';
+        const timeField = key === 'vault' ? 'release_ledger' : key === 'stream' ? 'end_ledger' : 'next_execution_ledger';
+
+        const count = await client.readContract(contractId, countFn, []);
+        if (!count) continue;
+
+        const num = Number(count);
+        const current = Number(await client.readContract(contractId, 'current_ledger', []));
+
+        for (let i = 1; i <= num; i++) {
+          const item = await client.readContract(contractId, getFn, [client.scvU64(i)]);
+          if (!item?._attributes || item._attributes.status !== 0) continue;
+
+          const targetLedger = Number(item._attributes[timeField]);
+          events.push({
+            type: key,
+            id: i,
+            targetLedger,
+            remainingLedgers: targetLedger - current,
+          });
+        }
+      }
+
+      events.sort((a, b) => a.remainingLedgers - b.remainingLedgers);
+      const limit = Math.min(parseInt(req.query.limit || '50', 10), 100);
+      res.json(events.slice(0, limit));
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  return router;
+}
