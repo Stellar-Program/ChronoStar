@@ -1,22 +1,33 @@
-import { rpc, Contract, xdr, Address } from '@stellar/stellar-sdk';
+import { rpc, Contract, xdr, Address, Keypair, Account, TransactionBuilder, scValToNative } from '@stellar/stellar-sdk';
 import { config } from './config.js';
 import { logger } from './logger.js';
 
 export class SorobanClient {
   constructor() {
     this.server = new rpc.Server(config.rpcUrl);
+    this.networkPassphrase = config.networkPassphrase;
   }
 
   async simulate(contractId, method, args) {
     const contract = new Contract(contractId);
-    const fn = contract.call(method, ...args);
-    const simulation = await this.server.simulateTransaction(fn);
+    const op = contract.call(method, ...args);
+    const source = Keypair.random();
+    const acc = new Account(source.publicKey(), '0');
+    const tx = new TransactionBuilder(acc, {
+      fee: '100',
+      networkPassphrase: this.networkPassphrase,
+    })
+      .addOperation(op)
+      .setTimeout(0)
+      .build();
+    const simulation = await this.server.simulateTransaction(tx);
     return simulation;
   }
 
   async readContract(contractId, method, args) {
     const sim = await this.simulate(contractId, method, args);
-    return sim?.result?.retval ?? null;
+    if (!sim?.result?.retval) return null;
+    return scValToNative(sim.result.retval);
   }
 
   scvU64(val) { return xdr.ScVal.scvU64(val); }

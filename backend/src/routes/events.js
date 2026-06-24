@@ -10,20 +10,19 @@ export function createEventsRouter(clients) {
       for (const [key, { client, contractId }] of Object.entries(clients)) {
         const countFn = key === 'vault' ? 'vault_count' : key === 'stream' ? 'stream_count' : 'dca_count';
         const getFn = key === 'vault' ? 'get_vault' : key === 'stream' ? 'get_stream' : 'get_dca';
-        const statusField = key === 'vault' ? 'status' : 'status';
+        const statusField = 'status';
         const timeField = key === 'vault' ? 'release_ledger' : key === 'stream' ? 'end_ledger' : 'next_execution_ledger';
 
         const count = await client.readContract(contractId, countFn, []);
         if (!count) continue;
 
-        const num = Number(count);
-        const current = Number(await client.readContract(contractId, 'current_ledger', []));
+        const current = await client.readContract(contractId, 'current_ledger', []);
 
-        for (let i = 1; i <= num; i++) {
+        for (let i = 1; i <= count; i++) {
           const item = await client.readContract(contractId, getFn, [client.scvU64(i)]);
-          if (!item?._attributes || item._attributes.status !== 0) continue;
+          if (!item || item[statusField] !== 0) continue;
 
-          const targetLedger = Number(item._attributes[timeField]);
+          const targetLedger = item[timeField];
           events.push({
             type: key,
             id: i,

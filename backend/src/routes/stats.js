@@ -14,15 +14,14 @@ export function createStatsRouter(clients) {
         const count = await client.readContract(contractId, countFn, []);
         if (!count) continue;
 
-        const num = Number(count);
         const group = key === 'dca' ? 'dca' : key + 's';
-        stats[group].total = num;
+        stats[group].total = count;
 
-        for (let i = 1; i <= num; i++) {
+        for (let i = 1; i <= count; i++) {
           const item = await client.readContract(contractId, getFn, [client.scvU64(i)]);
-          if (!item?._attributes) continue;
+          if (!item) continue;
 
-          const status = Number(item._attributes.status);
+          const status = item.status;
           if (key === 'vault') {
             if (status === 0) stats.vaults.active++;
             else if (status === 1) stats.vaults.released++;

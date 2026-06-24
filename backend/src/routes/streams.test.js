@@ -18,9 +18,9 @@ describe('GET /api/streams/:address', () => {
     const router = createStreamsRouter(client, 'C...');
 
     client.readContract.mock.mockImplementation(async (id, method, args) => {
-      if (method === 'get_streams_by_owner') return { _attributes: { arr: [{ _attributes: { u64: 1 } }] } };
+      if (method === 'get_streams_by_owner') return [1];
       if (method === 'get_streams_by_recipient') return null;
-      if (method === 'get_stream') return { _attributes: { id: 1, total_amount: 5000, status: 0 } };
+      if (method === 'get_stream') return { id: 1, total_amount: 5000, status: 0 };
       return null;
     });
 
@@ -40,8 +40,8 @@ describe('GET /api/dca/:address', () => {
     const router = createDCARouter(client, 'C...');
 
     client.readContract.mock.mockImplementation(async (id, method, args) => {
-      if (method === 'get_dcas_by_owner') return { _attributes: { arr: [{ _attributes: { u64: 1 } }] } };
-      if (method === 'get_dca') return { _attributes: { id: 1, total_budget: 10000, status: 0 } };
+      if (method === 'get_dcas_by_owner') return [1];
+      if (method === 'get_dca') return { id: 1, total_budget: 10000, status: 0 };
       return null;
     });
 

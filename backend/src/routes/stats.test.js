@@ -17,9 +17,9 @@ describe('GET /api/stats', () => {
       if (method === 'dca_count') return 0;
       if (method === 'get_vault') {
         const id = args[0];
-        return { _attributes: { status: id === 1 ? 0 : 1 } };
+        return { status: id === 1 ? 0 : 1 };
       }
-      if (method === 'get_stream') return { _attributes: { status: 0 } };
+      if (method === 'get_stream') return { status: 0 };
       return null;
     });
 

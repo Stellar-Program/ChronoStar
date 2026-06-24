@@ -17,11 +17,11 @@ describe('GET /api/schedules/:address', () => {
     const client = mockClient();
     client.readContract.mock.mockImplementation(async (id, method, args) => {
       if (method === 'get_vaults_by_owner') {
-        return { _attributes: { arr: [{ _attributes: { u64: 1 } }, { _attributes: { u64: 2 } }] } };
+        return [1, 2];
       }
       if (method === 'get_vault') {
         const id = args[0];
-        return { _attributes: { id, owner: 'G...', amount: id === 1 ? 1000 : 2000, status: 0 } };
+        return { id, owner: 'G...', amount: id === 1 ? 1000 : 2000, status: 0 };
       }
       return null;
     });

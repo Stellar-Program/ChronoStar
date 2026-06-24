@@ -16,7 +16,7 @@ describe('GET /api/events', () => {
       if (method === 'stream_count') return 0;
       if (method === 'dca_count') return 0;
       if (method === 'current_ledger') return 100;
-      if (method === 'get_vault') return { _attributes: { status: 0, release_ledger: 150 } };
+      if (method === 'get_vault') return { status: 0, release_ledger: 150 };
       return null;
     });
 
