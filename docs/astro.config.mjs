@@ -2,8 +2,8 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://stellar-ecosystem.github.io',
-  base: '/chronostar-docs',
+  site: 'https://stellar-program.github.io',
+  base: '/ChronoStar',
   integrations: [
     starlight({
       title: 'ChronoStar',
